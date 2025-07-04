@@ -1,9 +1,9 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import * as bodyParser from 'body-parser';
-import { NestExpressApplication } from '@nestjs/platform-express';
-import { GlobalHttpExceptionFilter } from './global/filter/exception.filter';
 import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import * as bodyParser from 'body-parser';
+import { AppModule } from './app.module';
+import { GlobalHttpExceptionFilter } from './global/filter/exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -21,6 +21,10 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(process.env.PORT ?? 5999);
+  await app.listen(process.env.PORT ?? 5999).then(() => {
+    console.log(
+      `✅ Application is running on: http://localhost:${process.env.PORT ?? 5999} 🚀`,
+    );
+  });
 }
 bootstrap();
